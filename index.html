@@ -47,46 +47,86 @@
             100% { box-shadow: inset 0 0 200px rgba(var(--christmas-red), 0.3); }
         }
         
-        /* トップバナーの外枠アニメーション（パルス効果） - 削除 */
-        /* @keyframes pulse-border { ... } */
-
-        /* 新しい星の点滅アニメーション - 削除 */
-        /* @keyframes twinkle { ... } */
-
-        /* きらめきボーダーアニメーション（赤/ゴールドベース）の定義 */
-        /* 今回はアニメーションなしにするため、静的なスタイルを適用 */
-        /* @keyframes glitter-border-animate { ... } */
+        /* === ネオンエフェクトアニメーション（赤/ゴールドベース） === */
+        @keyframes glitter-border-animate {
+            0% { box-shadow: 
+                0 0 0 6px var(--brand), /* 内側の赤枠 */
+                0 0 0 8px rgba(255, 255, 255, 0.5), /* 白い光 */
+                0 0 10px 10px rgba(255, 215, 0, 0.4); /* ゴールドの輝き */
+            }
+            50% { box-shadow: 
+                0 0 0 6px var(--brand), 
+                0 0 0 9px rgba(255, 255, 255, 0.7), 
+                0 0 12px 12px rgba(255, 215, 0, 0.6); 
+            }
+            100% { box-shadow: 
+                0 0 0 6px var(--brand), 
+                0 0 0 8px rgba(255, 255, 255, 0.5), 
+                0 0 10px 10px rgba(255, 215, 0, 0.4); 
+            }
+        }
         
         /* きらめきボーダーのスタイル共通定義（赤/ゴールドベース） */
         .glitter-border-style {
             position: relative;
             border-radius: var(--border-radius);
             border: none !important; 
-            /* アニメーションを削除し、静的なシャドウに */
-            box-shadow: 
-                0 0 0 6px var(--brand), /* 最も内側の太い赤枠 */
-                0 0 0 8px rgba(255, 255, 255, 0.5), /* 白い光 */
-                0 0 15px 15px rgba(255, 0, 0, 0.7); /* 赤色の輝きを強調 */
-            /* animation: glitter-border-animate 2s ease-in-out infinite alternate; */ /* アニメーション削除 */
+            animation: glitter-border-animate 2s ease-in-out infinite alternate; 
             transition: all 0.3s ease;
         }
 
-        /* きらめきボーダーアニメーション（緑/ゴールドベース - オプションセクション用）の定義 */
-        /* 今回はアニメーションなしにするため、静的なスタイルを適用 */
-        /* @keyframes glitter-border-animate-yellow { ... } */
+        /* === ネオンエフェクトアニメーション（緑/ゴールドベース - オプションセクション用） === */
+        @keyframes glitter-border-animate-yellow {
+            0% { box-shadow: 
+                0 0 0 4px var(--christmas-gold), /* ゴールドの太枠 */
+                0 0 10px 8px rgba(255, 255, 255, 0.6); /* 白い光の拡散 */
+            }
+            50% { box-shadow: 
+                0 0 0 5px var(--christmas-gold), 
+                0 0 15px 12px rgba(255, 255, 255, 0.8); 
+            }
+            100% { box-shadow: 
+                0 0 0 4px var(--christmas-gold), 
+                0 0 10px 8px rgba(255, 255, 255, 0.6); 
+            }
+        }
 
         /* きらめきボーダーのスタイル共通定義（緑/ゴールドベース - オプションセクション用） */
         .glitter-border-style-yellow {
             position: relative;
             border-radius: var(--border-radius);
-            /* 既存のボーダー/シャドウを削除 */
             border: none !important; 
-            /* アニメーションを削除し、静的なシャドウに */
-            box-shadow: 
-                0 0 0 4px var(--christmas-gold), /* 最も内側の太いゴールド枠 */
-                0 0 10px 8px rgba(255, 255, 255, 0.6); /* 白い光の拡散 */
-            /* animation: glitter-border-animate-yellow 2.5s ease-in-out infinite alternate; */ /* アニメーション削除 */
+            animation: glitter-border-animate-yellow 2.5s ease-in-out infinite alternate; 
             transition: all 0.3s ease;
+        }
+
+        /* === トップバナーの統一されたネオン装飾 === */
+        #limited-time-banner {
+            width: 100%;
+            background-color: #ffffff;
+            /* 雪の結晶パターン SVGを維持 */
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e0e0e0' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 40px 40px; 
+            position: relative;
+            border-radius: 16px;
+            padding: 20px 10px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            overflow: visible;
+            
+            /* 修正: glitter-border-styleの静的なネオンシャドウを直接適用 */
+            /* アニメーションは適用しないが、ネオンの光沢は維持する */
+            box-shadow: 0 0 0 6px var(--brand), 0 0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px 15px rgba(255, 0, 0, 0.7); 
+            border: none; /* 既存のボーダーを削除 */
+        }
+        
+        #limited-time-banner::after {
+            content: none; /* 修正: 星のマスク装飾を削除して、他のセクションのネオンと競合しないようにする */
         }
 
         html {
@@ -134,51 +174,6 @@
             font-weight: 700;
             margin: 40px 0 24px 0;
             color: #333;
-        }
-
-        /* --- トップバナー --- */
-        #limited-time-banner {
-            width: 100%;
-            /* 変更: 背景に星のパターンを追加 */
-            background-color: #ffffff;
-            /* 雪の結晶パターン SVG */
-            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e0e0e0' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
-            background-size: 40px 40px; /* パターンのサイズを調整 */
-
-            border: 4px solid transparent;
-            background-clip: padding-box;
-            position: relative;
-            border-radius: 16px;
-            padding: 20px 10px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column; 
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            margin-top: 20px;
-            overflow: visible;
-        }
-
-        #limited-time-banner::after {
-            content: '';
-            position: absolute;
-            /* 外枠サイズを6pxに統一 */
-            top: -6px; bottom: -6px; left: -6px; right: -6px; 
-            background: linear-gradient(45deg, var(--christmas-red), var(--christmas-green)); /* 赤と緑のグラデーションボーダー */
-            border-radius: 18px;
-            z-index: -1;
-            
-            /* 星の装飾をマスクで切り抜き（キラキラ感強調） */
-            /* 複数星のSVGマスクを使用 */
-            mask-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cmask id='star-mask'%3E%3Crect x='0' y='0' width='100%25' height='100%25' fill='white' /%3E%3Cg fill='black'%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(5 5) scale(0.5)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(50 30) scale(0.4)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(100 10) scale(0.6)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(150 40) scale(0.3)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(200 20) scale(0.5)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(250 5) scale(0.4)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(300 35) scale(0.55)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(350 15) scale(0.45)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(400 45) scale(0.6)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(450 25) scale(0.35)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(500 10) scale(0.5)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(550 30) scale(0.4)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(600 5) scale(0.55)'/%3E%3C/g%3E%3C/mask%3E%3C/defs%3E%3Crect x='0' y='0' width='100%25' height='100%25' fill='var(--christmas-gold)' mask='url(%23star-mask)'/%3E%3C/svg%3E"); 
-            mask-size: 100% 100%;
-            -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cmask id='star-mask'%3E%3Crect x='0' y='0' width='100%25' height='100%25' fill='white' /%3E%3Cg fill='black'%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(5 5) scale(0.5)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(50 30) scale(0.4)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(100 10) scale(0.6)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(150 40) scale(0.3)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(200 20) scale(0.5)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(250 5) scale(0.4)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(300 35) scale(0.55)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(350 15) scale(0.45)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(400 45) scale(0.6)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(450 25) scale(0.35)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(500 10) scale(0.5)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(550 30) scale(0.4)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(600 5) scale(0.55)'/%3E%3C/g%3E%3C/mask%3E%3C/defs%3E%3Crect x='0' y='0' width='100%25' height='100%25' fill='var(--christmas-gold)' mask='url(%23star-mask)'/%3E%3C/svg%3E"); 
-
-            /* animation: pulse-border 1.5s ease-in-out infinite alternate, twinkle 2s ease-in-out infinite alternate; */ /* アニメーション削除 */
-            /* 静的なシャドウを強くする */
-            box-shadow: 0 0 18px 10px rgba(255, 0, 0, 0.9), inset 0 0 10px rgba(255, 255, 255, 0.4); 
         }
 
         /* 修正: 星を大きく */
@@ -554,7 +549,7 @@
         .bonus-section {
             background: var(--color-card-bg); border-radius: var(--border-radius); padding: 2.5rem 1.5rem;
             margin: 2.5rem auto 0 auto; width: 100%; max-width: 640px; box-shadow: var(--shadow-soft); text-align: center;
-            /* 修正: ここもglitter-border-styleを適用 */
+            /* 修正: glitter-border-styleを適用 (アニメーション付き) */
         }
         .bonus-section .section-main-header { margin-bottom: 1.5rem; }
         .bonus-section .section-main-header h2 { font-size: 1.6rem; font-weight: 900; color: var(--color-dark); line-height: 1.4; font-family: var(--font-accent); }
@@ -658,7 +653,7 @@
 <!-- コンテンツ全体をラッパーで囲み、中央寄せを保証 -->
 <div class="lp-wrapper">
 
-    <div id="limited-time-banner">
+    <div id="limited-time-banner" class="glitter-border-style">
         <div class="banner-left-content">
             <div class="banner-text-row-top">
                 <span class="banner-date" id="dynamic-end-date"></span>
@@ -699,7 +694,8 @@
                                 <span class="calculation-note-final">
                                     本日X日入会の場合<br>
                                     ※誤差の可能性有り
-                                </span>
+                                
+</span>
                             </div>
                         </div>
                         <div class="price-item is-discount">
@@ -868,8 +864,7 @@
                 <button id="carousel-next-free">
                     <i class="ph ph-arrow-right"></i>
                 </button>
-            </div>
-        </section>
+            </section>
         
         <section class="options-carousel-section" style="margin-top: 60px;">
             <div class="text-box" style="width: 100%; max-width: 640px; margin: 0 auto; padding: 0 15px;">
@@ -883,7 +878,8 @@
             <div class="scene">
                 <div id="card-carousel-paid" class="card-carousel">
                     <!-- JSで動的に生成されます -->
-                </div>
+                </div
+>
             </div>
             <div class="carousel-nav">
                 <button id="carousel-prev-paid">
@@ -1026,7 +1022,7 @@
 </div> <!-- lp-wrapper end -->
 
 <div class="fixed-banner">
-    <!-- 修正: 見学体験のURLをVercelのURLに差し替え -->
+    <!-- 修正: 見学体験のURLはVercelのURLに差し替え済み -->
     <a href="https://24-kyodo-freetrial.vercel.app/" class="banner-btn trial" target="_blank">見学体験はコチラ👆</a>
     <a href="https://joyfit.jp/kyodo/app_join/" class="banner-btn app" target="_blank">入会はコチラ👆</a>
 </div>
