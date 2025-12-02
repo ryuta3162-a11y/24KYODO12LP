@@ -47,6 +47,68 @@
             100% { box-shadow: inset 0 0 200px rgba(var(--christmas-red), 0.3); }
         }
 
+        /* きらめきボーダーアニメーション（赤/ゴールドベース）の定義 */
+        @keyframes glitter-border-animate {
+            0% { box-shadow: 
+                0 0 0 6px var(--brand), 
+                0 0 0 8px rgba(255, 255, 255, 0.5), /* 白い光 */
+                0 0 10px 10px rgba(255, 215, 0, 0.4); /* ゴールドの輝き */
+            }
+            50% { box-shadow: 
+                0 0 0 6px var(--brand), 
+                0 0 0 9px rgba(255, 255, 255, 0.7), /* 白い光を強調 */
+                0 0 12px 12px rgba(255, 215, 0, 0.6); /* ゴールドの輝きを強調 */
+            }
+            100% { box-shadow: 
+                0 0 0 6px var(--brand), 
+                0 0 0 8px rgba(255, 255, 255, 0.5), 
+                0 0 10px 10px rgba(255, 215, 0, 0.4); 
+            }
+        }
+        
+        /* きらめきボーダーのスタイル共通定義（赤/ゴールドベース） */
+        .glitter-border-style {
+            position: relative;
+            border-radius: var(--border-radius);
+            border: none !important; 
+            box-shadow: 
+                0 0 0 6px var(--brand), /* 最も内側の太い赤枠 */
+                0 0 0 8px rgba(255, 255, 255, 0.5), 
+                0 0 10px 10px rgba(255, 215, 0, 0.4); 
+            animation: glitter-border-animate 2s ease-in-out infinite alternate;
+            transition: all 0.3s ease;
+        }
+
+        /* きらめきボーダーアニメーション（緑/ゴールドベース - オプションセクション用）の定義 */
+        @keyframes glitter-border-animate-yellow {
+            0% { box-shadow: 
+                0 0 0 4px var(--christmas-gold), /* ゴールドの太枠 */
+                0 0 10px 8px rgba(255, 255, 255, 0.6); /* 白い光の拡散 */
+            }
+            50% { box-shadow: 
+                0 0 0 5px var(--christmas-gold), 
+                0 0 15px 12px rgba(255, 255, 255, 0.8); 
+            }
+            100% { box-shadow: 
+                0 0 0 4px var(--christmas-gold), 
+                0 0 10px 8px rgba(255, 255, 255, 0.6); 
+            }
+        }
+
+        /* きらめきボーダーのスタイル共通定義（緑/ゴールドベース - オプションセクション用） */
+        .glitter-border-style-yellow {
+            position: relative;
+            border-radius: var(--border-radius);
+            /* 既存のボーダー/シャドウを削除 */
+            border: none !important; 
+            box-shadow: 
+                0 0 0 4px var(--christmas-gold), /* 最も内側の太いゴールド枠 */
+                0 0 10px 8px rgba(255, 255, 255, 0.6); /* 白い光の拡散 */
+            animation: glitter-border-animate-yellow 2.5s ease-in-out infinite alternate;
+            transition: all 0.3s ease;
+        }
+
+
         html {
             scroll-behavior: smooth;
             box-sizing: border-box;
@@ -273,12 +335,13 @@
         .price-display-center .original { font-size: 1.1rem; font-family: var(--font-accent); color: #777; text-decoration: line-through; display: block; }
         .price-display-center .free-option-note { font-size: 0.9rem; font-weight: 700; color: var(--brand); display: block; margin-top: 4px; }
         
+        /* 修正: 日割り料金の詳細を小さくして一行表示に対応 */
         .price-display-center .calculation-note-final {
-            font-size: 0.8rem; 
+            font-size: 0.7rem; 
             font-weight: 700; 
             color: #555;
             display: block; 
-            line-height: 1.4;
+            line-height: 1.2; /* 行間を詰める */
             margin-top: 4px;
         }
 
@@ -318,7 +381,14 @@
         
         .plan-conditions-list { margin-top: 1.5rem; margin-bottom: 1.5rem; border-top: 1px solid #e0e0e0; padding-top: 1.5rem; text-align: center; }
         .plan-conditions-list ul { list-style: none; padding-left: 0; margin: 0 auto 1rem auto; display: inline-block; text-align: left; }
-        .plan-conditions-list li { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.85rem; font-weight: 700; color: #333; line-height: 1.7; margin-bottom: 0.75rem; }
+        /* 修正: 6ヶ月継続プランの条件リストを小さくして一行表示に対応 */
+        .plan-conditions-list li { 
+            display: flex; align-items: flex-start; gap: 0.75rem; 
+            font-size: 0.8rem; /* 0.85rem から 0.8rem に縮小 */
+            font-weight: 700; color: #333; 
+            line-height: 1.3; /* 行間を調整 */
+            margin-bottom: 0.75rem; 
+        }
         .plan-conditions-list li i { font-size: 1.2rem; color: var(--brand); margin-top: 3px; }
         .plan-conditions-list li strong { color: var(--brand); font-weight: 900; }
         .plan-option-note { font-size: 0.8rem; font-weight: 700; color: #e0e0e0; background: linear-gradient(135deg, #434343, #2b2b2b); border-radius: 8px; padding: 0.75rem; line-height: 1.6; margin: 1.5rem auto; max-width: 90%; width: 320px; }
@@ -351,6 +421,7 @@
             z-index: 1;
             color: var(--color-white); 
             border-radius: var(--border-radius); 
+            /* 修正: glitter-border-style-yellowを適用 */
             box-shadow: 0 0 0 4px var(--option-section-border-color), var(--shadow-soft); 
             padding: 40px 0; 
             margin: 40px auto; 
@@ -449,9 +520,15 @@
 
         /* --- 注意事項セクション --- */
         .notice-container-v22 {
-            background-color: #fff; border: 5px solid var(--brand); border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); margin: 60px auto 0 auto; padding: 30px 25px;
-            text-align: center; position: relative; max-width: 90%; width: 100%; box-sizing: border-box;
+            background-color: #fff; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); 
+            margin: 60px auto 0 auto; 
+            padding: 30px 25px;
+            text-align: center; 
+            position: relative; 
+            max-width: 100%; 
+            width: 100%; 
+            box-sizing: border-box;
         }
         .notice-container-v22 .notice-title-v22 { font-family: var(--font-accent); font-size: 2.2rem; font-weight: 700; color: var(--brand); margin-bottom: 25px; letter-spacing: 0.05em; display: flex; align-items: center; justify-content: center; }
         .notice-container-v22 .notice-title-v22::before, .notice-container-v22 .notice-title-v22::after { content: ''; flex: 1; height: 3px; background-color: var(--brand); opacity: 0.5; }
@@ -466,6 +543,7 @@
         .bonus-section {
             background: var(--color-card-bg); border-radius: var(--border-radius); padding: 2.5rem 1.5rem;
             margin: 2.5rem auto 0 auto; width: 100%; max-width: 640px; box-shadow: var(--shadow-soft); text-align: center;
+            /* 修正: ここもglitter-border-styleを適用 */
         }
         .bonus-section .section-main-header { margin-bottom: 1.5rem; }
         .bonus-section .section-main-header h2 { font-size: 1.6rem; font-weight: 900; color: var(--color-dark); line-height: 1.4; font-family: var(--font-accent); }
@@ -512,7 +590,7 @@
         /* --- アクセスマップセクション --- */
         .access-section { 
             background: var(--color-card-bg); margin: 30px auto; border-radius: var(--border-radius); overflow: hidden; 
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1); transition: all 0.3s ease-out; border: 4px solid #c21632; 
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1); transition: all 0.3s ease-out; 
             width: 100%; max-width: 640px; box-sizing: border-box;
         }
         .access-section:hover { transform: translateY(-5px); box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.2); }
@@ -585,7 +663,7 @@
     </div>
 
     <!-- プラン選択セクション -->
-    <section class="plan-selection-section py-8">
+    <section class="plan-selection-section py-8 glitter-border-style">
         <h2 style="color: var(--color-dark);">選べる<span>2</span>つの入会プラン</h2>
         <div class="plan-tabs">
             <button class="plan-tab-button active" data-plan="plan1">① 通常プラン<span class="badge" style="background-color: var(--christmas-gold); color: #000;">継続の縛りなし</span></button>
@@ -755,7 +833,8 @@
     </section>
 
     <!-- オプションカルーセルセクション -->
-    <section class="options-group-section" id="options-group-section">
+    <!-- 修正: glitter-border-style-yellowを適用 -->
+    <section class="options-group-section glitter-border-style-yellow" id="options-group-section">
         <section class="options-carousel-section">
             <div class="text-box" style="width: 100%; max-width: 640px; margin: 0 auto; padding: 0 15px;">
                 <h2 class="section-title">
@@ -807,7 +886,7 @@
     </section>
 
     <!-- 注意事項セクション -->
-    <div class="notice-container-v22" id="notice-section">
+    <div class="notice-container-v22 glitter-border-style" id="notice-section">
         <div class="notice-title-v22">
             <span>注意事項</span>
         </div>
@@ -825,7 +904,8 @@
     </div>
 
     <!-- 追加特典セクション -->
-    <section class="bonus-section">
+    <!-- 修正: glitter-border-styleを適用 -->
+    <section class="bonus-section glitter-border-style">
         <div class="section-main-header">
             <h2 id="benefits-heading">選べる！<span class="highlight">追加特典</span>一覧</h2>
         </div>
@@ -876,7 +956,7 @@
     </section>
 
     <!-- アクセスマップセクション -->
-    <section class="access-section">
+    <section class="access-section glitter-border-style">
         <header class="access-header">
             <img src="joylogo.jpg" alt="JOYFIT24経堂 アクセスマップ" onerror="this.onerror=null; this.src='https://placehold.co/600x200/C21632/ffffff?text=JOYFIT24+KYODO';">
         </header>
@@ -1194,13 +1274,14 @@ document.addEventListener('DOMContentLoaded', function() {
             calculatedTotal = currentMonthFee + INITIAL_FEE;
             const perDayCost = Math.round(DAILY_RATE);
             
-            // ラベルの下に「1日あたり...」を表示 (ここが②のオプションと同じような位置になります)
+            // ラベルの下に「1日あたり...」を表示 
             if (labelNoteEl) {
+                // 修正: 1日あたりの料金表示も少し小さくして一行に収まりやすくする
+                labelNoteEl.style.fontSize = '0.75rem'; 
                 labelNoteEl.textContent = `1日あたり ${perDayCost}円`;
             }
 
             // 日割り料金の表示更新 (右側)
-            // ここからは「1日あたり...」を削除してスッキリさせます
             if (currentDay === 1) {
                 priceEl.innerHTML = `
                     <span class="price-value">${MONTHLY_FEE.toLocaleString()}<span class="unit">円</span></span>
