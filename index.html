@@ -46,54 +46,34 @@
             50% { box-shadow: inset 0 0 300px rgba(var(--christmas-red), 0.5); }
             100% { box-shadow: inset 0 0 200px rgba(var(--christmas-red), 0.3); }
         }
+        
+        /* トップバナーの外枠アニメーション（パルス効果） - 削除 */
+        /* @keyframes pulse-border { ... } */
+
+        /* 新しい星の点滅アニメーション - 削除 */
+        /* @keyframes twinkle { ... } */
 
         /* きらめきボーダーアニメーション（赤/ゴールドベース）の定義 */
-        @keyframes glitter-border-animate {
-            0% { box-shadow: 
-                0 0 0 6px var(--brand), 
-                0 0 0 8px rgba(255, 255, 255, 0.5), /* 白い光 */
-                0 0 10px 10px rgba(255, 215, 0, 0.4); /* ゴールドの輝き */
-            }
-            50% { box-shadow: 
-                0 0 0 6px var(--brand), 
-                0 0 0 9px rgba(255, 255, 255, 0.7), /* 白い光を強調 */
-                0 0 12px 12px rgba(255, 215, 0, 0.6); /* ゴールドの輝きを強調 */
-            }
-            100% { box-shadow: 
-                0 0 0 6px var(--brand), 
-                0 0 0 8px rgba(255, 255, 255, 0.5), 
-                0 0 10px 10px rgba(255, 215, 0, 0.4); 
-            }
-        }
+        /* 今回はアニメーションなしにするため、静的なスタイルを適用 */
+        /* @keyframes glitter-border-animate { ... } */
         
         /* きらめきボーダーのスタイル共通定義（赤/ゴールドベース） */
         .glitter-border-style {
             position: relative;
             border-radius: var(--border-radius);
             border: none !important; 
+            /* アニメーションを削除し、静的なシャドウに */
             box-shadow: 
                 0 0 0 6px var(--brand), /* 最も内側の太い赤枠 */
-                0 0 0 8px rgba(255, 255, 255, 0.5), 
-                0 0 10px 10px rgba(255, 215, 0, 0.4); 
-            animation: glitter-border-animate 2s ease-in-out infinite alternate;
+                0 0 0 8px rgba(255, 255, 255, 0.5), /* 白い光 */
+                0 0 15px 15px rgba(255, 0, 0, 0.7); /* 赤色の輝きを強調 */
+            /* animation: glitter-border-animate 2s ease-in-out infinite alternate; */ /* アニメーション削除 */
             transition: all 0.3s ease;
         }
 
         /* きらめきボーダーアニメーション（緑/ゴールドベース - オプションセクション用）の定義 */
-        @keyframes glitter-border-animate-yellow {
-            0% { box-shadow: 
-                0 0 0 4px var(--christmas-gold), /* ゴールドの太枠 */
-                0 0 10px 8px rgba(255, 255, 255, 0.6); /* 白い光の拡散 */
-            }
-            50% { box-shadow: 
-                0 0 0 5px var(--christmas-gold), 
-                0 0 15px 12px rgba(255, 255, 255, 0.8); 
-            }
-            100% { box-shadow: 
-                0 0 0 4px var(--christmas-gold), 
-                0 0 10px 8px rgba(255, 255, 255, 0.6); 
-            }
-        }
+        /* 今回はアニメーションなしにするため、静的なスタイルを適用 */
+        /* @keyframes glitter-border-animate-yellow { ... } */
 
         /* きらめきボーダーのスタイル共通定義（緑/ゴールドベース - オプションセクション用） */
         .glitter-border-style-yellow {
@@ -101,13 +81,13 @@
             border-radius: var(--border-radius);
             /* 既存のボーダー/シャドウを削除 */
             border: none !important; 
+            /* アニメーションを削除し、静的なシャドウに */
             box-shadow: 
                 0 0 0 4px var(--christmas-gold), /* 最も内側の太いゴールド枠 */
                 0 0 10px 8px rgba(255, 255, 255, 0.6); /* 白い光の拡散 */
-            animation: glitter-border-animate-yellow 2.5s ease-in-out infinite alternate;
+            /* animation: glitter-border-animate-yellow 2.5s ease-in-out infinite alternate; */ /* アニメーション削除 */
             transition: all 0.3s ease;
         }
-
 
         html {
             scroll-behavior: smooth;
@@ -159,7 +139,12 @@
         /* --- トップバナー --- */
         #limited-time-banner {
             width: 100%;
-            background: #ffffff;
+            /* 変更: 背景に星のパターンを追加 */
+            background-color: #ffffff;
+            /* 雪の結晶パターン SVG */
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e0e0e0' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 40px 40px; /* パターンのサイズを調整 */
+
             border: 4px solid transparent;
             background-clip: padding-box;
             position: relative;
@@ -175,16 +160,34 @@
             margin-top: 20px;
             overflow: visible;
         }
+
         #limited-time-banner::after {
             content: '';
             position: absolute;
-            top: -4px; bottom: -4px; left: -4px; right: -4px;
-            background: repeating-linear-gradient(45deg, var(--christmas-red), var(--christmas-red) 10px, var(--color-white) 10px, var(--color-white) 20px, var(--christmas-green) 20px, var(--christmas-green) 30px, var(--color-white) 30px, var(--color-white) 40px);
-            z-index: -1;
+            /* 外枠サイズを6pxに統一 */
+            top: -6px; bottom: -6px; left: -6px; right: -6px; 
+            background: linear-gradient(45deg, var(--christmas-red), var(--christmas-green)); /* 赤と緑のグラデーションボーダー */
             border-radius: 18px;
+            z-index: -1;
+            
+            /* 星の装飾をマスクで切り抜き（キラキラ感強調） */
+            /* 複数星のSVGマスクを使用 */
+            mask-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cmask id='star-mask'%3E%3Crect x='0' y='0' width='100%25' height='100%25' fill='white' /%3E%3Cg fill='black'%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(5 5) scale(0.5)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(50 30) scale(0.4)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(100 10) scale(0.6)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(150 40) scale(0.3)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(200 20) scale(0.5)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(250 5) scale(0.4)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(300 35) scale(0.55)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(350 15) scale(0.45)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(400 45) scale(0.6)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(450 25) scale(0.35)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(500 10) scale(0.5)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(550 30) scale(0.4)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(600 5) scale(0.55)'/%3E%3C/g%3E%3C/mask%3E%3C/defs%3E%3Crect x='0' y='0' width='100%25' height='100%25' fill='var(--christmas-gold)' mask='url(%23star-mask)'/%3E%3C/svg%3E"); 
+            mask-size: 100% 100%;
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cmask id='star-mask'%3E%3Crect x='0' y='0' width='100%25' height='100%25' fill='white' /%3E%3Cg fill='black'%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(5 5) scale(0.5)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(50 30) scale(0.4)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(100 10) scale(0.6)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(150 40) scale(0.3)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(200 20) scale(0.5)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(250 5) scale(0.4)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(300 35) scale(0.55)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(350 15) scale(0.45)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(400 45) scale(0.6)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(450 25) scale(0.35)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(500 10) scale(0.5)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(550 30) scale(0.4)'/%3E%3Cpath d='M9.5 0.5l-2.3 4.7l-5.2 0.8l3.8 3.7l-0.9 5.2l4.6 -2.4l4.6 2.4l-0.9 -5.2l3.8 -3.7l-5.2 -0.8z' transform='translate(600 5) scale(0.55)'/%3E%3C/g%3E%3C/mask%3E%3C/defs%3E%3Crect x='0' y='0' width='100%25' height='100%25' fill='var(--christmas-gold)' mask='url(%23star-mask)'/%3E%3C/svg%3E"); 
+
+            /* animation: pulse-border 1.5s ease-in-out infinite alternate, twinkle 2s ease-in-out infinite alternate; */ /* アニメーション削除 */
+            /* 静的なシャドウを強くする */
+            box-shadow: 0 0 18px 10px rgba(255, 0, 0, 0.9), inset 0 0 10px rgba(255, 255, 255, 0.4); 
         }
+
+        /* 修正: 星を大きく */
         .mascot-star {
-            font-size: 1rem; color: var(--christmas-gold); margin: 0 5px; vertical-align: middle; display: inline-block;
+            font-size: 1.2rem; 
+            color: var(--christmas-gold); 
+            margin: 0 5px; 
+            vertical-align: middle; 
+            display: inline-block;
         }
         .banner-left-content { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-align: center; z-index: 1; }
         .banner-text-row-top { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
@@ -197,7 +200,13 @@
             padding: 4px 10px; border-radius: 50px; line-height: 1; white-space: nowrap;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2); border: 2px solid #fff;
         }
-        .banner-text-row-bottom { font-size: 0.9rem; font-weight: 700; color: #555; margin-top: 5px; }
+        /* 修正: 「終了まで」を大きく */
+        .banner-text-row-bottom { 
+            font-size: 1.0rem; 
+            font-weight: 700; 
+            color: #555; 
+            margin-top: 5px; 
+        }
         .countdown-container { display: flex; gap: 8px; align-items: center; justify-content: center; z-index: 1; }
         .countdown-circle { 
             width: 60px; height: 60px; background-color: var(--christmas-green); border-radius: 50%;
@@ -278,7 +287,9 @@
         
         .plan-accordion-content { 
             text-align: center; padding: 1.5rem; background-color: #fff;
-            border: 4px solid var(--brand); border-top: none; box-shadow: var(--shadow-strong);
+            /* 修正: 内側の赤いボーダーを削除 */
+            border: none; 
+            box-shadow: var(--shadow-strong);
             border-bottom-left-radius: var(--border-radius); border-bottom-right-radius: var(--border-radius);
             max-width: calc(100% - 30px);
             margin: 0 auto;
@@ -1015,7 +1026,8 @@
 </div> <!-- lp-wrapper end -->
 
 <div class="fixed-banner">
-    <a href="https://24kyodo-free-trial.netlify.app/" class="banner-btn trial" target="_blank">見学体験はコチラ👆</a>
+    <!-- 修正: 見学体験のURLをVercelのURLに差し替え -->
+    <a href="https://24-kyodo-freetrial.vercel.app/" class="banner-btn trial" target="_blank">見学体験はコチラ👆</a>
     <a href="https://joyfit.jp/kyodo/app_join/" class="banner-btn app" target="_blank">入会はコチラ👆</a>
 </div>
 
