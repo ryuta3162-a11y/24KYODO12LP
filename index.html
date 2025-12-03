@@ -307,6 +307,29 @@
         }
         .price-list { padding: 1rem 1.5rem 0 1.5rem; border: 2px solid #f0f0f0; border-top: none; border-bottom: none; }
         .price-item { display: flex; justify-content: center; align-items: flex-start; padding: 1rem 0; border-bottom: 1px dashed #ccc; gap: 0.5rem; }
+        
+        /* ▼ 変更開始: price-item内の要素サイズを全体的に縮小 (80%相当) */
+        @media (max-width: 480px) {
+            .price-item { 
+                padding: 0.75rem 0; /* 上下のパディングを少し減らす */
+                gap: 0.4rem; /* ギャップを減らす */
+            }
+            .price-item .label-group { min-width: 120px; } /* 最小幅を確保 */
+            .price-item .number-circle { width: 26px; height: 26px; font-size: 1rem; } /* ナンバーサークルを縮小 */
+            .price-item .label { font-size: 0.75rem; } /* 0.9rem -> 0.75rem */
+            .price-item .label .note { font-size: 0.65rem; } /* 0.85rem -> 0.65rem */
+
+            .price-display-center .price-value { font-size: 1.3rem; } /* 1.5rem -> 1.3rem */
+            .price-display-center .price-value.zero-yen { font-size: 1.8rem; } /* 2.2rem -> 1.8rem */
+            .price-display-center .unit { font-size: 0.8rem; } /* 1rem -> 0.8rem */
+            .price-display-center .original { font-size: 0.9rem; } /* 1.1rem -> 0.9rem */
+            .price-display-center .free-option-note { font-size: 0.75rem; } /* 0.9rem -> 0.75rem */
+            .price-display-center .calculation-note-final { font-size: 0.6rem; } /* 0.7rem -> 0.6rem */
+
+            .price-item-footnote a { font-size: 0.8rem; padding: 0.4rem 0.8rem; } /* ボタンも縮小 */
+        }
+        /* ▲ 変更終了: price-item内の要素サイズを全体的に縮小 */
+
         @media (max-width: 400px) {
             .price-item { flex-direction: column; align-items: center; gap: 0.75rem; }
             .price-item .label-group { width: 90%; min-width: unset; justify-content: center; }
@@ -1362,7 +1385,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // ラベルの下に「1日あたり...」を表示 
             if (labelNoteEl) {
                 // 修正: 1日あたりの料金表示も少し小さくして一行に収まりやすくする
-                labelNoteEl.style.fontSize = '0.75rem'; 
+                labelNoteEl.style.fontSize = '0.65rem'; /* 0.75rem -> 0.65rem */
                 labelNoteEl.textContent = `1日あたり ${perDayCost}円`;
             }
 
