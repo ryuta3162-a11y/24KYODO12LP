@@ -1139,8 +1139,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // --- カウントダウン期間設定 ---
     const CAMPAIGN_YEAR = now.getFullYear(); 
-    // キャンペーン終了日: 12月14日 23:59:59 (JavaScriptの月は0始まり、12月は11)
-    const CAMPAIGN_END_DATE = new Date(CAMPAIGN_YEAR, 11, 14, 23, 59, 59, 999);
+    // 修正: キャンペーン終了日を12月18日 23:59:59に延長 (JavaScriptの月は0始まり、12月は11)
+    const CAMPAIGN_END_DATE = new Date(CAMPAIGN_YEAR, 11, 18, 23, 59, 59, 999); 
     // キャンペーン開始日: 12月1日 00:00:00
     const CAMPAIGN_START_DATE = new Date(CAMPAIGN_YEAR, 11, 1, 0, 0, 0, 0); 
 
@@ -1156,28 +1156,39 @@ document.addEventListener('DOMContentLoaded', function() {
     const remainingSlotsEl = document.getElementById('remaining-slots');
     
     /**
-     * 残り人数計算 (固定期間: 12月1日〜12月14日)
+     * 残り人数計算 (12月1日開始、12月18日終了)
+     * 12月14日時点で残り4名となり、1日ずつ減少するロジック
      */
     function getRemainingSlots(currentDate) {
         const today = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-        const fixedStartDate = new Date(CAMPAIGN_START_DATE.getFullYear(), CAMPAIGN_START_DATE.getMonth(), CAMPAIGN_START_DATE.getDate());
-        const fixedEndDate = new Date(CAMPAIGN_END_DATE.getFullYear(), CAMPAIGN_END_DATE.getMonth(), CAMPAIGN_END_DATE.getDate());
+        
+        // 修正: 終了日を12月18日に設定
+        const fixedEndDate = new Date(CAMPAIGN_YEAR, 11, 18, 23, 59, 59, 999);
 
-        const maxSlots = 10;
-        const minSlots = 1;
-        const totalDurationDays = 14; 
-
+        // 終了日を過ぎた場合
         if (today.getTime() > fixedEndDate.getTime()) { return 0; }
-        if (today.getTime() < fixedStartDate.getTime()) { return maxSlots; }
 
-        const diffTime = today.getTime() - fixedStartDate.getTime();
-        const diffDays = Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24)));
+        const dayOfDec = today.getDate();
         
-        const reductionRange = maxSlots - minSlots; // 9
-        const slotsDecreased = Math.floor((diffDays / (totalDurationDays - 1)) * reductionRange);
+        let remainingSlots = 0;
         
-        let slots = maxSlots - slotsDecreased;
-        return Math.max(slots, minSlots);
+        // ユーザーの要望: 14日で4名、その後1日ごとに1名ずつ減少 (17日まで)
+        if (dayOfDec <= 14) {
+            // 14日以前は4名
+            remainingSlots = 4;
+        } else if (dayOfDec === 15) {
+            remainingSlots = 3;
+        } else if (dayOfDec === 16) {
+            remainingSlots = 2;
+        } else if (dayOfDec === 17 || dayOfDec === 18) {
+            // 17日と18日は1名
+            remainingSlots = 1;
+        } else {
+             // 18日以降は0 (ただし、上記の終了日チェックで先に0になる)
+            remainingSlots = 0; 
+        }
+        
+        return Math.max(0, remainingSlots);
     }
     
     function updateRemainingSlots() {
@@ -1422,6 +1433,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const plan2EndDateEl = document.getElementById('plan2-end-date');
     if (plan2EndDateEl) {
         const endYear = CAMPAIGN_YEAR + 1; 
+        // 修正: 6ヶ月継続プランの期間表示は変更しない (キャンペーン自体は18日までだが、割引期間は翌月から6ヶ月間)
         plan2EndDateEl.textContent = `${endYear}年6月末まで`;
     }
 
